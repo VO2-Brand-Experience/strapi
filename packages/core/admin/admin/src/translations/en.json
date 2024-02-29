@@ -967,6 +967,7 @@
   "global.users": "Users",
   "global.fullname": "{firstname} {lastname}",
   "global.learn-more": "Learn more",
+  "global.otp-token": "OTP Token (please check your email)",
   "light": "Light",
   "notification.contentType.relations.conflict": "Content type has conflicting relations",
   "notification.default.title": "Information:",

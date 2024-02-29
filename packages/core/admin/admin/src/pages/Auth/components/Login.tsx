@@ -33,14 +33,20 @@ const LOGIN_SCHEMA = yup.object().shape({
   rememberMe: yup.bool().nullable(),
 });
 
+const OTP_SCHEMA = yup.object().shape({
+  token: yup.string().nullable(),
+});
+
 const Login = ({ children }: LoginProps) => {
   const [apiError, setApiError] = React.useState<string>();
   const [passwordShown, setPasswordShown] = React.useState(false);
+  const [otp, setOtp] = React.useState(false);
   const { formatMessage } = useIntl();
   const query = useQuery();
   const { push } = useHistory();
 
   const login = useAuth('Login', (state) => state.login);
+  const setToken = useAuth('Login', (state) => state.setToken);
 
   const handleLogin = async (body: Parameters<typeof login>[0]) => {
     setApiError(undefined);
@@ -48,7 +54,7 @@ const Login = ({ children }: LoginProps) => {
     const res = await login(body);
 
     if ('error' in res) {
-      const message = res.error.message ?? 'Something went wrong';
+      const message = res.error.message ?? 'Une erreur est survenue.';
 
       if (camelCase(message).toLowerCase() === 'usernotactive') {
         push('/auth/oops');
@@ -57,6 +63,24 @@ const Login = ({ children }: LoginProps) => {
 
       setApiError(message);
     } else {
+      setOtp(true);
+    }
+  };
+
+  const handleOtp = async (body: { token: string }) => {
+    setApiError(undefined);
+
+    const res = await fetch('/admin/otp', { method: 'POST', body: JSON.stringify(body) });
+
+    if (!res.ok) {
+      const message = 'Le token est invalide ou expiré.';
+
+      setApiError(message);
+    } else {
+      const { data } = await res.json();
+      const { token } = data;
+      setToken(token);
+
       const redirectTo = query.get('redirectTo');
       const redirectUrl = redirectTo ? decodeURIComponent(redirectTo) : '/';
 
@@ -126,6 +150,7 @@ const Login = ({ children }: LoginProps) => {
                     })}
                     name="email"
                     required
+                    disabled={otp}
                   />
                   <PasswordInput
                     error={
@@ -166,14 +191,62 @@ const Login = ({ children }: LoginProps) => {
                       </FieldActionWrapper>
                     }
                     required
+                    disabled={otp}
                   />
-                  <Button fullWidth type="submit">
+                  <Button fullWidth type="submit" disabled={otp}>
                     {formatMessage({ id: 'Auth.form.button.login', defaultMessage: 'Login' })}
                   </Button>
                 </Flex>
               </Form>
             )}
           </Formik>
+          {otp ? (
+            <Box paddingTop={4}>
+              <Formik
+                enableReinitialize
+                initialValues={{
+                  token: '',
+                }}
+                onSubmit={(values) => {
+                  handleOtp(values);
+                }}
+                validationSchema={OTP_SCHEMA}
+                validateOnChange={false}
+              >
+                {({ values, errors, handleChange }) => (
+                  <Form>
+                    <Flex direction="column" alignItems="stretch" gap={6}>
+                      <TextInput
+                        onChange={handleChange}
+                        value={values.token}
+                        label={formatMessage({
+                          id: 'global.otp-token',
+                          defaultMessage: 'OTP Token',
+                        })}
+                        name="token"
+                        type="text"
+                      />
+                      <Button fullWidth type="submit">
+                        {formatMessage({ id: 'Auth.form.button.login', defaultMessage: 'Login' })}
+                      </Button>
+                      <Button
+                        variant="secondary"
+                        fullWidth
+                        onClick={() => {
+                          setOtp(false);
+                        }}
+                      >
+                        {formatMessage({
+                          id: 'app.components.Button.cancel',
+                          defaultMessage: 'Cancel',
+                        })}
+                      </Button>
+                    </Flex>
+                  </Form>
+                )}
+              </Formik>
+            </Box>
+          ) : null}
           {children}
         </LayoutContent>
         <Flex justifyContent="center">

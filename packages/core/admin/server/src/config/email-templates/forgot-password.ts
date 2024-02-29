@@ -1,19 +1,19 @@
-const subject = `Reset password`;
+const subject = `Réinitialisation de mot de passe`;
 
-const html = `<p>We heard that you lost your password. Sorry about that!</p>
+const html = `<p>Vous avez oublié votre mot de passe. Aucun problème !</p>
 
-<p>But don’t worry! You can use the following link to reset your password:</p>
+<p>Veuillez retrouver un lien pour le rénitialiser ci-dessous :</p>
 
 <p><%= url %></p>
 
-<p>Thanks.</p>`;
+<p>Merci.</p>`;
 
-const text = `We heard that you lost your password. Sorry about that!
+const text = `Vous avez oublié votre mot de passe. Aucun problème !
 
-But don’t worry! You can use the following link to reset your password:
+Veuillez retrouver un lien pour le rénitialiser ci-dessous :
 
 <%= url %>
 
-Thanks.`;
+Merci.`;
 
 export default { subject, text, html };

@@ -700,6 +700,7 @@
   "global.settings": "Paramètres",
   "global.type": "Type",
   "global.users": "Utilisateurs",
+  "global.otp-token": "Token OTP (Veuillez vérifier votre boîte mail)",
   "light": "Clair",
   "form.button.done": "Terminer",
   "global.prompt.unsaved": "Êtes-vous sûr de vouloir quitter cette page? Toutes vos modifications seront perdues",

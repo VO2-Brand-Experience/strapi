@@ -19,6 +19,14 @@ export declare namespace Login {
     };
     errors?: errors.ApplicationError | errors.NotImplementedError;
   }
+
+  export interface ResponseOtp {
+    data: {
+      token: string;
+      // user: Omit<SanitizedAdminUser, 'permissions'>;
+    };
+    errors?: errors.ApplicationError | errors.NotImplementedError;
+  }
 }
 
 /**
