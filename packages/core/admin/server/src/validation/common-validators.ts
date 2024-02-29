@@ -22,10 +22,11 @@ export const username = yup.string().min(1);
 
 export const password = yup
   .string()
-  .min(8)
+  .min(15)
   .matches(/[a-z]/, '${path} must contain at least one lowercase character')
   .matches(/[A-Z]/, '${path} must contain at least one uppercase character')
-  .matches(/\d/, '${path} must contain at least one number');
+  .matches(/\d/, '${path} must contain at least one number')
+  .matches(/[@$!%*?&]/, '${path} must contain at least one special character');
 
 export const roles = yup.array(yup.strapiID()).min(1);
 

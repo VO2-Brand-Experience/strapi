@@ -11,13 +11,13 @@ const COMMON_USER_SCHEMA = {
   username: yup.string().nullable(),
   password: yup
     .string()
-    .min(8, translatedErrors.minLength)
+    .min(15, translatedErrors.minLength)
     .matches(/[a-z]/, 'components.Input.error.contain.lowercase')
     .matches(/[A-Z]/, 'components.Input.error.contain.uppercase')
-    .matches(/\d/, 'components.Input.error.contain.number'),
+    .matches(/\d/, 'components.Input.error.contain.number')
+    .matches(/[@$!%*?&]/, 'components.Input.error.contain.specialCharacter'),
   confirmPassword: yup
     .string()
-    .min(8, translatedErrors.minLength)
     .oneOf([yup.ref('password'), null], 'components.Input.error.password.noMatch')
     .when('password', (password, passSchema) => {
       return password ? passSchema.required(translatedErrors.required) : passSchema;

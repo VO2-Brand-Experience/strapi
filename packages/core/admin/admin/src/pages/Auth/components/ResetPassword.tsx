@@ -26,10 +26,11 @@ import { FieldActionWrapper } from './FieldActionWrapper';
 const RESET_PASSWORD_SCHEMA = yup.object().shape({
   password: yup
     .string()
-    .min(8, translatedErrors.minLength)
+    .min(15, translatedErrors.minLength)
     .matches(/[a-z]/, 'components.Input.error.contain.lowercase')
     .matches(/[A-Z]/, 'components.Input.error.contain.uppercase')
     .matches(/\d/, 'components.Input.error.contain.number')
+    .matches(/[@$!%*?&]/, 'components.Input.error.contain.specialCharacter')
     .required(translatedErrors.required),
   confirmPassword: yup
     .string()
@@ -147,7 +148,7 @@ const ResetPassword = () => {
                     hint={formatMessage({
                       id: 'Auth.form.password.hint',
                       defaultMessage:
-                        'Password must contain at least 8 characters, 1 uppercase, 1 lowercase and 1 number',
+                        'Password must contain at least 15 characters, 1 uppercase, 1 lowercase, 1 number and 1 special character.',
                     })}
                     required
                     label={formatMessage({

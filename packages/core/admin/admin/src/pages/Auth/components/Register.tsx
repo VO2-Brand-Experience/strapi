@@ -55,10 +55,11 @@ const REGISTER_USER_SCHEMA = yup.object().shape({
   lastname: yup.string().nullable(),
   password: yup
     .string()
-    .min(8, translatedErrors.minLength)
+    .min(15, translatedErrors.minLength)
     .matches(/[a-z]/, 'components.Input.error.contain.lowercase')
     .matches(/[A-Z]/, 'components.Input.error.contain.uppercase')
     .matches(/\d/, 'components.Input.error.contain.number')
+    .matches(/[@$!%*?&]/, 'components.Input.error.contain.specialCharacter')
     .required(translatedErrors.required),
   confirmPassword: yup
     .string()
@@ -72,10 +73,11 @@ const REGISTER_ADMIN_SCHEMA = yup.object().shape({
   lastname: yup.string().nullable(),
   password: yup
     .string()
-    .min(8, translatedErrors.minLength)
+    .min(15, translatedErrors.minLength)
     .matches(/[a-z]/, 'components.Input.error.contain.lowercase')
     .matches(/[A-Z]/, 'components.Input.error.contain.uppercase')
     .matches(/\d/, 'components.Input.error.contain.number')
+    .matches(/[@$!%*?&]/, 'components.Input.error.contain.specialCharacter')
     .required(translatedErrors.required),
   email: yup
     .string()
@@ -399,7 +401,7 @@ const Register = ({ hasAdmin }: RegisterProps) => {
                       hint={formatMessage({
                         id: 'Auth.form.password.hint',
                         defaultMessage:
-                          'Must be at least 8 characters, 1 uppercase, 1 lowercase & 1 number',
+                          'Must be at least 15 characters, 1 uppercase, 1 lowercase, 1 number & 1 special character',
                       })}
                       required
                       label={formatMessage({
