@@ -28,6 +28,7 @@ export declare namespace UpdateMe {
     lastname?: string;
     username?: string;
     preferedLanguage?: string;
+    comment?: string;
   }
 
   export interface Request {

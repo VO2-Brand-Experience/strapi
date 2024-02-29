@@ -92,6 +92,12 @@ export default {
       required: false,
       searchable: false,
     },
+    comment: {
+      type: 'string',
+      configurable: false,
+      required: false,
+      searchable: false,
+    },
   },
   config: {
     attributes: {

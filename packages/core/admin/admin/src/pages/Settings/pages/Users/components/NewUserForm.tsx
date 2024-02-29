@@ -340,6 +340,22 @@ const FORM_LAYOUT = [
       },
       required: true,
     },
+    {
+      intlLabel: {
+        id: 'Auth.form.comment.label',
+        defaultMessage: 'Comment',
+      },
+      name: 'comment',
+      placeholder: {
+        id: 'Auth.form.comment.placeholder',
+        defaultMessage: 'e.g. ServiceNow #1234',
+      },
+      type: 'text',
+      size: {
+        col: 6,
+        xs: 12,
+      },
+    },
   ],
 ] satisfies FormLayout[][];
 
@@ -348,6 +364,7 @@ const FORM_SCHEMA = yup.object().shape({
   lastname: yup.string(),
   email: yup.string().email(translatedErrors.email).required(translatedErrors.required),
   roles: yup.array().min(1, translatedErrors.required).required(translatedErrors.required),
+  comment: yup.string(),
 });
 
 const STEPPER = {

@@ -52,7 +52,15 @@ const EDIT_VALIDATION_SCHEMA = yup.object().shape({
   roles: yup.array().min(1, translatedErrors.required).required(translatedErrors.required),
 });
 
-const fieldsToPick = ['email', 'firstname', 'lastname', 'username', 'isActive', 'roles'] as const;
+const fieldsToPick = [
+  'email',
+  'firstname',
+  'lastname',
+  'username',
+  'isActive',
+  'roles',
+  'comment',
+] as const;
 
 /* -------------------------------------------------------------------------------------------------
  * EditPage
@@ -459,6 +467,20 @@ const LAYOUT = [
       },
       name: 'isActive',
       type: 'bool',
+      size: {
+        col: 6,
+        xs: 12,
+      },
+    },
+  ],
+  [
+    {
+      intlLabel: {
+        id: 'Auth.form.comment.label',
+        defaultMessage: 'Comment',
+      },
+      name: 'comment',
+      type: 'string',
       size: {
         col: 6,
         xs: 12,

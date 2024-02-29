@@ -33,6 +33,7 @@ export default {
       'email',
       'roles',
       'preferedLanguage',
+      'comment',
     ]);
 
     const userAlreadyExists = await getService('user').exists({

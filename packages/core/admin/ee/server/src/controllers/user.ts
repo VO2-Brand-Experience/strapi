@@ -11,7 +11,7 @@ import { isSsoLocked } from '../utils/sso-lock';
 
 const { ApplicationError, ForbiddenError } = errors;
 
-const pickUserCreationAttributes = pick(['firstname', 'lastname', 'email', 'roles']);
+const pickUserCreationAttributes = pick(['firstname', 'lastname', 'email', 'roles', 'comment']);
 
 const hasAdminSeatsAvaialble = async () => {
   if (!strapi.EE) {
