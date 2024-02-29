@@ -167,19 +167,6 @@ const Login = ({ children }: LoginProps) => {
                     }
                     required
                   />
-                  <Checkbox
-                    onValueChange={(checked) => {
-                      handleChange({ target: { value: checked, name: 'rememberMe' } });
-                    }}
-                    value={values.rememberMe}
-                    aria-label="rememberMe"
-                    name="rememberMe"
-                  >
-                    {formatMessage({
-                      id: 'Auth.form.rememberMe.label',
-                      defaultMessage: 'Remember me',
-                    })}
-                  </Checkbox>
                   <Button fullWidth type="submit">
                     {formatMessage({ id: 'Auth.form.button.login', defaultMessage: 'Login' })}
                   </Button>
