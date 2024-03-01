@@ -164,32 +164,32 @@ export default {
 
     const user = await getService('user').register(input);
 
-        const token = randomInt(100000, 999999).toString();
-        strapi
-          .plugin('email')
-          .service('email')
-          .sendTemplatedEmail(
-            {
-              to: user.email,
-              from: strapi.config.get('admin.otp.from'),
-              replyTo: strapi.config.get('admin.otp.replyTo'),
-            },
-            strapi.config.get('admin.otp.emailTemplate'),
-            {
-              token,
-              user: _.pick(user, ['email', 'firstname', 'lastname', 'username']),
-            }
-          )
-          .catch((err: unknown) => {
-            // log error server side but do not disclose it to the user to avoid leaking informations
-            strapi.log.error(err);
-          });
-        if (process.env.NODE_ENV === 'development') {
-          console.log('otp', token);
+    const token = randomInt(100000, 999999).toString();
+    strapi
+      .plugin('email')
+      .service('email')
+      .sendTemplatedEmail(
+        {
+          to: user.email,
+          from: strapi.config.get('admin.otp.from'),
+          replyTo: strapi.config.get('admin.otp.replyTo'),
+        },
+        strapi.config.get('admin.otp.emailTemplate'),
+        {
+          token,
+          user: _.pick(user, ['email', 'firstname', 'lastname', 'username']),
         }
-        ctx.session.token = token;
-        ctx.session.tokenExpiry = new Date(Date.now() + 10 * 60 * 1000);
-        ctx.session.user = user;
+      )
+      .catch((err: unknown) => {
+        // log error server side but do not disclose it to the user to avoid leaking informations
+        strapi.log.error(err);
+      });
+    if (process.env.NODE_ENV === 'development') {
+      console.log('otp', token);
+    }
+    ctx.session.token = token;
+    ctx.session.tokenExpiry = new Date(Date.now() + 10 * 60 * 1000);
+    ctx.session.user = user;
 
     ctx.body = {
       data: {
@@ -231,32 +231,32 @@ export default {
 
     strapi.telemetry.send('didCreateFirstAdmin');
 
-        const token = randomInt(100000, 999999).toString();
-        strapi
-          .plugin('email')
-          .service('email')
-          .sendTemplatedEmail(
-            {
-              to: user.email,
-              from: strapi.config.get('admin.otp.from'),
-              replyTo: strapi.config.get('admin.otp.replyTo'),
-            },
-            strapi.config.get('admin.otp.emailTemplate'),
-            {
-              token,
-              user: _.pick(user, ['email', 'firstname', 'lastname', 'username']),
-            }
-          )
-          .catch((err: unknown) => {
-            // log error server side but do not disclose it to the user to avoid leaking informations
-            strapi.log.error(err);
-          });
-        if (process.env.NODE_ENV === 'development') {
-          console.log('otp', token);
+    const token = randomInt(100000, 999999).toString();
+    strapi
+      .plugin('email')
+      .service('email')
+      .sendTemplatedEmail(
+        {
+          to: user.email,
+          from: strapi.config.get('admin.otp.from'),
+          replyTo: strapi.config.get('admin.otp.replyTo'),
+        },
+        strapi.config.get('admin.otp.emailTemplate'),
+        {
+          token,
+          user: _.pick(user, ['email', 'firstname', 'lastname', 'username']),
         }
-        ctx.session.token = token;
-        ctx.session.tokenExpiry = new Date(Date.now() + 10 * 60 * 1000);
-        ctx.session.user = user;
+      )
+      .catch((err: unknown) => {
+        // log error server side but do not disclose it to the user to avoid leaking informations
+        strapi.log.error(err);
+      });
+    if (process.env.NODE_ENV === 'development') {
+      console.log('otp', token);
+    }
+    ctx.session.token = token;
+    ctx.session.tokenExpiry = new Date(Date.now() + 10 * 60 * 1000);
+    ctx.session.user = user;
 
     ctx.body = {
       data: {
