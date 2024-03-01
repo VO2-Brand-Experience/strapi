@@ -15,7 +15,7 @@ const COMMON_USER_SCHEMA = {
     .matches(/[a-z]/, 'components.Input.error.contain.lowercase')
     .matches(/[A-Z]/, 'components.Input.error.contain.uppercase')
     .matches(/\d/, 'components.Input.error.contain.number')
-    .matches(/[@$!%*?&]/, 'components.Input.error.contain.specialCharacter'),
+    .matches(/[?,.;/:%*£$_-()~#“'&|\\\[\]=+]/, 'components.Input.error.contain.specialCharacter'),
   confirmPassword: yup
     .string()
     .oneOf([yup.ref('password'), null], 'components.Input.error.password.noMatch')

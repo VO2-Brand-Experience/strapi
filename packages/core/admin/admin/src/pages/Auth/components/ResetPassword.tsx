@@ -30,7 +30,7 @@ const RESET_PASSWORD_SCHEMA = yup.object().shape({
     .matches(/[a-z]/, 'components.Input.error.contain.lowercase')
     .matches(/[A-Z]/, 'components.Input.error.contain.uppercase')
     .matches(/\d/, 'components.Input.error.contain.number')
-    .matches(/[@$!%*?&]/, 'components.Input.error.contain.specialCharacter')
+    .matches(/[?,.;/:%*£$_-()~#“'&|\\\[\]=+]/, 'components.Input.error.contain.specialCharacter')
     .required(translatedErrors.required),
   confirmPassword: yup
     .string()
