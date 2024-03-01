@@ -59,7 +59,10 @@ const REGISTER_USER_SCHEMA = yup.object().shape({
     .matches(/[a-z]/, 'components.Input.error.contain.lowercase')
     .matches(/[A-Z]/, 'components.Input.error.contain.uppercase')
     .matches(/\d/, 'components.Input.error.contain.number')
-    .matches(/[?,.;/:%*£$_-()~#“'&|\\\[\]=+]/, 'components.Input.error.contain.specialCharacter')
+    .matches(
+      /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/,
+      'components.Input.error.contain.specialCharacter'
+    )
     .required(translatedErrors.required),
   confirmPassword: yup
     .string()
@@ -77,7 +80,10 @@ const REGISTER_ADMIN_SCHEMA = yup.object().shape({
     .matches(/[a-z]/, 'components.Input.error.contain.lowercase')
     .matches(/[A-Z]/, 'components.Input.error.contain.uppercase')
     .matches(/\d/, 'components.Input.error.contain.number')
-    .matches(/[?,.;/:%*£$_-()~#“'&|\\\[\]=+]/, 'components.Input.error.contain.specialCharacter')
+    .matches(
+      /[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/,
+      'components.Input.error.contain.specialCharacter'
+    )
     .required(translatedErrors.required),
   email: yup
     .string()
@@ -89,6 +95,10 @@ const REGISTER_ADMIN_SCHEMA = yup.object().shape({
     .string()
     .oneOf([yup.ref('password'), null], 'components.Input.error.password.noMatch')
     .required(translatedErrors.required),
+});
+
+const OTP_SCHEMA = yup.object().shape({
+  token: yup.string().nullable(),
 });
 
 interface RegisterProps {
@@ -110,6 +120,7 @@ const Register = ({ hasAdmin }: RegisterProps) => {
   const { push } = useHistory();
   const [passwordShown, setPasswordShown] = React.useState(false);
   const [confirmPasswordShown, setConfirmPasswordShown] = React.useState(false);
+  const [otp, setOtp] = React.useState(false);
   const [submitCount, setSubmitCount] = React.useState(0);
   const [apiError, setApiError] = React.useState<string>();
   const { trackUsage } = useTracking();
@@ -155,7 +166,7 @@ const Register = ({ hasAdmin }: RegisterProps) => {
     const res = await registerAdmin(body);
 
     if ('data' in res) {
-      setToken(res.data.token);
+      setOtp(true);
 
       const { roles } = res.data.user;
 
@@ -167,18 +178,6 @@ const Register = ({ hasAdmin }: RegisterProps) => {
           setSkipped(false);
           trackUsage('didLaunchGuidedtour');
         }
-      }
-
-      if (news) {
-        // Only enable EE survey if user accepted the newsletter
-        setNpsSurveySettings((s) => ({ ...s, enabled: true }));
-
-        push({
-          pathname: '/usecase',
-          search: `?hasAdmin=${true}`,
-        });
-      } else {
-        push('/');
       }
     } else {
       if (isBaseQueryError(res.error)) {
@@ -201,19 +200,7 @@ const Register = ({ hasAdmin }: RegisterProps) => {
     const res = await registerUser(body);
 
     if ('data' in res) {
-      setToken(res.data.token);
-
-      if (news) {
-        // Only enable EE survey if user accepted the newsletter
-        setNpsSurveySettings((s) => ({ ...s, enabled: true }));
-
-        push({
-          pathname: '/usecase',
-          search: `?hasAdmin=${hasAdmin}`,
-        });
-      } else {
-        push('/');
-      }
+      setOtp(true);
     } else {
       if (isBaseQueryError(res.error)) {
         trackUsage('didNotCreateFirstAdmin');
@@ -225,6 +212,27 @@ const Register = ({ hasAdmin }: RegisterProps) => {
 
         setApiError(formatAPIError(res.error));
       }
+    }
+  };
+
+  const handleOtp = async (body: { token: string }) => {
+    setApiError(undefined);
+
+    const res = await fetch('/admin/otp', { method: 'POST', body: JSON.stringify(body) });
+
+    if (!res.ok) {
+      const message = 'Le token est invalide ou expiré.';
+
+      setApiError(message);
+    } else {
+      const { data } = await res.json();
+      const { token } = data;
+      setToken(token);
+
+      const redirectTo = query.get('redirectTo');
+      const redirectUrl = redirectTo ? decodeURIComponent(redirectTo) : '/';
+
+      push(redirectUrl);
     }
   };
 
@@ -493,6 +501,53 @@ const Register = ({ hasAdmin }: RegisterProps) => {
             );
           }}
         </Formik>
+        {otp ? (
+          <Box paddingTop={4}>
+            <Formik
+              enableReinitialize
+              initialValues={{
+                token: '',
+              }}
+              onSubmit={(values) => {
+                handleOtp(values);
+              }}
+              validationSchema={OTP_SCHEMA}
+              validateOnChange={false}
+            >
+              {({ values, errors, handleChange }) => (
+                <Form>
+                  <Flex direction="column" alignItems="stretch" gap={6}>
+                    <TextInput
+                      onChange={handleChange}
+                      value={values.token}
+                      label={formatMessage({
+                        id: 'global.otp-token',
+                        defaultMessage: 'OTP Token',
+                      })}
+                      name="token"
+                      type="text"
+                    />
+                    <Button fullWidth type="submit">
+                      {formatMessage({ id: 'Auth.form.button.login', defaultMessage: 'Login' })}
+                    </Button>
+                    <Button
+                      variant="secondary"
+                      fullWidth
+                      onClick={() => {
+                        setOtp(false);
+                      }}
+                    >
+                      {formatMessage({
+                        id: 'app.components.Button.cancel',
+                        defaultMessage: 'Cancel',
+                      })}
+                    </Button>
+                  </Flex>
+                </Form>
+              )}
+            </Formik>
+          </Box>
+        ) : null}
         {match?.params.authType === 'register' && (
           <Box paddingTop={4}>
             <Flex justifyContent="center">
