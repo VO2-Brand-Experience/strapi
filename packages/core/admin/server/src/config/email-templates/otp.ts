@@ -1,19 +1,23 @@
-const subject = `Authentification double facteur`;
+const subject = `Authentification CMS Nirio`;
 
-const html = `<p>Vous êtes en train de vous connecter.</p>
+const html = `<p>Bonjour,</p>
+<br />
+<p>Votre code de vérification pour la connexion à Nirio est : <%= token %></p>
+<br />
+<p>
+Veuillez utiliser ce code pour vous connecter. Attention, ne partagez ce code à personne.
+</p>
+<br />
+<p>Merci.</p>
+<p>L'équipe Nirio</p>`;
 
-<p>Veuillez retrouver le token de connexion ci-dessous</p>
+const text = `Bonjour,
 
-<p><%= token %></p>
+Votre code de vérification pour la connexion à Nirio est : <%= token %>
 
-<p>Merci.</p>`;
+Veuillez utiliser ce code pour vous connecter. Attention, ne partagez ce code à personne.
 
-const text = `Vous êtes en train de vous connecter.
-
-Veuillez retrouver le token de connexion ci-dessous
-
-<%= token %>
-
-Merci.`;
+Merci,
+L'équipe Nirio`;
 
 export default { subject, text, html };
