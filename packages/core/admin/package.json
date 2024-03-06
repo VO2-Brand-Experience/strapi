@@ -1,7 +1,8 @@
 {
   "name": "@strapi/admin",
-  "name-": "@VO2-Brand-Experience/strapi-admin",
-  "version": "4.20.3-hardened2",
+  "name-": "@meeehdi/strapi-admin",
+  "version": "4.20.3",
+  "version-": "4.20.3-hardened6",
   "description": "Strapi Admin",
   "repository": {
     "type": "git",
