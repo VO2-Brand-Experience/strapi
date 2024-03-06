@@ -342,7 +342,7 @@ const FORM_LAYOUT = [
     },
     {
       intlLabel: {
-        id: '',
+        id: '-',
         defaultMessage: 'Référence de demande de création Service Now',
       },
       name: 'serviceNowCreationRequestReference',
@@ -358,7 +358,7 @@ const FORM_LAYOUT = [
     },
     {
       intlLabel: {
-        id: '',
+        id: '-',
         defaultMessage: 'Référence de demande de suppression Service Now',
       },
       name: 'serviceNowDeletionRequestReference',

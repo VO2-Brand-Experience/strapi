@@ -463,7 +463,7 @@ const LAYOUT = [
   [
     {
       intlLabel: {
-        id: '',
+        id: '-',
         defaultMessage: 'Active',
       },
       name: 'isActive',
@@ -477,7 +477,7 @@ const LAYOUT = [
   [
     {
       intlLabel: {
-        id: '',
+        id: '-',
         defaultMessage: 'Référence de demande de création Service Now',
       },
       name: 'serviceNowCreationRequestReference',
@@ -491,7 +491,7 @@ const LAYOUT = [
   [
     {
       intlLabel: {
-        id: 'Auth.form.comment.label',
+        id: '-',
         defaultMessage: 'Référence de demande de suppression Service Now',
       },
       name: 'serviceNowDeletionRequestReference',
