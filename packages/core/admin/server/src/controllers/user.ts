@@ -33,7 +33,8 @@ export default {
       'email',
       'roles',
       'preferedLanguage',
-      'comment',
+      'serviceNowCreationRequestReference',
+      'serviceNowDeletionRequestReference',
     ]);
 
     const userAlreadyExists = await getService('user').exists({

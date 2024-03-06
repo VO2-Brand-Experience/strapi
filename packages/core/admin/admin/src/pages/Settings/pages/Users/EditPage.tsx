@@ -59,7 +59,8 @@ const fieldsToPick = [
   'username',
   'isActive',
   'roles',
-  'comment',
+  'serviceNowCreationRequestReference',
+  'serviceNowDeletionRequestReference',
 ] as const;
 
 /* -------------------------------------------------------------------------------------------------
@@ -462,7 +463,7 @@ const LAYOUT = [
   [
     {
       intlLabel: {
-        id: 'Auth.form.active.label',
+        id: '',
         defaultMessage: 'Active',
       },
       name: 'isActive',
@@ -476,10 +477,24 @@ const LAYOUT = [
   [
     {
       intlLabel: {
-        id: 'Auth.form.comment.label',
-        defaultMessage: 'Comment',
+        id: '',
+        defaultMessage: 'Référence de demande de création Service Now',
       },
-      name: 'comment',
+      name: 'serviceNowCreationRequestReference',
+      type: 'string',
+      size: {
+        col: 6,
+        xs: 12,
+      },
+    },
+  ],
+  [
+    {
+      intlLabel: {
+        id: 'Auth.form.comment.label',
+        defaultMessage: 'Référence de demande de suppression Service Now',
+      },
+      name: 'serviceNowDeletionRequestReference',
       type: 'string',
       size: {
         col: 6,

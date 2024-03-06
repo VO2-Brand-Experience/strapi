@@ -28,7 +28,8 @@ export declare namespace UpdateMe {
     lastname?: string;
     username?: string;
     preferedLanguage?: string;
-    comment?: string;
+    serviceNowCreationRequestReference?: string;
+    serviceNowDeletionRequestReference?: string;
   }
 
   export interface Request {

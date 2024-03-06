@@ -342,13 +342,29 @@ const FORM_LAYOUT = [
     },
     {
       intlLabel: {
-        id: 'Auth.form.comment.label',
-        defaultMessage: 'Comment',
+        id: '',
+        defaultMessage: 'Référence de demande de création Service Now',
       },
-      name: 'comment',
+      name: 'serviceNowCreationRequestReference',
       placeholder: {
-        id: 'Auth.form.comment.placeholder',
-        defaultMessage: 'e.g. ServiceNow #1234',
+        id: '',
+        defaultMessage: '',
+      },
+      type: 'text',
+      size: {
+        col: 6,
+        xs: 12,
+      },
+    },
+    {
+      intlLabel: {
+        id: '',
+        defaultMessage: 'Référence de demande de suppression Service Now',
+      },
+      name: 'serviceNowDeletionRequestReference',
+      placeholder: {
+        id: '',
+        defaultMessage: '',
       },
       type: 'text',
       size: {
@@ -364,7 +380,8 @@ const FORM_SCHEMA = yup.object().shape({
   lastname: yup.string(),
   email: yup.string().email(translatedErrors.email).required(translatedErrors.required),
   roles: yup.array().min(1, translatedErrors.required).required(translatedErrors.required),
-  comment: yup.string(),
+  serviceNowCreationRequestReference: yup.string(),
+  serviceNowDeletionRequestReference: yup.string(),
 });
 
 const STEPPER = {

@@ -92,11 +92,11 @@ export default {
       required: false,
       searchable: false,
     },
-    comment: {
+    serviceNowCreationRequestReference: {
       type: 'string',
-      configurable: false,
-      required: false,
-      searchable: false,
+    },
+    serviceNowDeletionRequestReference: {
+      type: 'string',
     },
   },
   config: {

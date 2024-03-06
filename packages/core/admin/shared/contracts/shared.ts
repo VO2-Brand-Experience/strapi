@@ -30,7 +30,8 @@ export interface AdminUser extends Entity {
   roles: AdminRole[];
   blocked: boolean;
   preferedLanguage?: string;
-  comment?: string;
+  serviceNowCreationRequestReference?: string;
+  serviceNowDeletionRequestReference?: string;
 }
 
 export type AdminUserCreationPayload = Omit<
