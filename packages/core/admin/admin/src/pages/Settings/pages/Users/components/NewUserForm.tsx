@@ -347,7 +347,7 @@ const FORM_LAYOUT = [
       },
       name: 'serviceNowCreationRequestReference',
       placeholder: {
-        id: '',
+        id: '-',
         defaultMessage: '',
       },
       type: 'text',
@@ -363,7 +363,7 @@ const FORM_LAYOUT = [
       },
       name: 'serviceNowDeletionRequestReference',
       placeholder: {
-        id: '',
+        id: '-',
         defaultMessage: '',
       },
       type: 'text',
